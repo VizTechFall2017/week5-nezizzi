@@ -1,57 +1,59 @@
 var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
-//set up variables to hold two versions of the data, one for each year
-var data2016;
-var data2000;
 
-//set up a tracker variable to watch the button click state
+var allData;
+var former;
+var current;
+var status= former;
 var clicked = true;
 
-//set up scales to position circles using the data
-var scaleX = d3.scalePoint().domain(["16-19", "20-24", "25-34", "35-44", "45-54", "55-64","65+"]).range([0, 600]);
-var scaleY = d3.scaleLinear().domain([0,1200]).range([400, 0]);  //remember that 0,0 is at the top of the screen! 300 is the lowest value on the y axis
-
-
-// Add the x Axis
+//axes
+var ScaleX = d3.scaleLinear().domain([0,30]).range([0, 450]);
+var ScaleY = d3.scaleLinear().domain([0,30]).range([400, 0]);
 svg.append("g")
-    .attr('transform','translate(0,400)')  //move the x axis from the top of the y axis to the bottom
-    .call(d3.axisBottom(scaleX));
-
+    .attr('transform','translate(0,400)')
+    .call(d3.axisBottom(ScaleX));
 svg.append("g")
-    .call(d3.axisLeft(scaleY));
+    .call(d3.axisLeft(ScaleY));
 
 
 //import the data from the .csv file
-d3.csv('./incomeData.csv', function(dataIn){
+d3.csv('./data.csv', function(dataIn) {
 
-    data2016 = dataIn.filter(function(d){
-        return d.year == 2016;
+    allData = dataIn;
+
+    current = dataIn.filter(function (d) {
+        return d.A1CURFOR == 1;
     });
 
-    data2000 = dataIn.filter(function(d){
-        return d.year == 2000;
+    former = dataIn.filter(function (d) {
+        return d.A1CURFOR == 2;
     });
 
+    //console.log(current);
+    //console.log(former);
+
+});
 
     /*nestedData = d3.nest()
         .key(function(d){return d.year})
         .entries(dataIn);
 
     console.log(nestedData.filter(function(d){return d.key == "2016"})[0].values);
-    */
+
 
 
     svg.append('text')
-        .text('Weekly income by age and gender')
+        .text('FORMER AND CURRENT DANCER AGES')
         .attr('transform','translate(300, -20)')
         .style('text-anchor','middle');
 
     svg.append('text')
-        .text('age group')
+        .text('age started training')
         .attr('transform','translate(260, 440)');
 
     svg.append('text')
-        .text('weekly income')
+        .text('age began professional career')
         .attr('transform', 'translate(-50,250)rotate(270)');
 
     //bind the data to the d3 selection, but don't draw it yet
@@ -114,4 +116,4 @@ function buttonClicked(){
 
 
 
-}
+}*/
