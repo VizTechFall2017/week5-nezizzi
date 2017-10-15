@@ -11,7 +11,13 @@ var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diplo
 var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([400, 0]);
 svg.append("g")
     .attr('transform','translate(85,400)')
-    .call(d3.axisBottom(ScaleX));
+    .call(d3.axisBottom(ScaleX))
+    .selectAll("text")
+        .attr("y", 0)
+        .attr("x", 9)
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start");
+
 svg.append("g")
     .attr('transform','translate(85,0)')
     .call(d3.axisLeft(ScaleY));
@@ -23,12 +29,12 @@ svg.append('text')
     .style('text-anchor','middle');
 
 svg.append('text')
-    .text('Highest Non-Dance Education Level')
-    .attr('transform','translate(300, 550)');
+    .text('Highest Dance Education Level')
+    .attr('transform','translate(400, 600)');
 
 svg.append('text')
-    .text('Highest Dance Education Level')
-    .attr('transform', 'translate(-75,250)rotate(270)');
+    .text('Highest Non-Dance Education Level')
+    .attr('transform', 'translate(-75,300)rotate(270)');
 
 //import the data from the .csv file
 d3.csv('./data.csv', function(dataIn) {
