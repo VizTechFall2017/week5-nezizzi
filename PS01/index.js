@@ -8,11 +8,10 @@ gender= current;
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
-//var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([400, 0]);
 var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
-var ScaleY =d3.scalePoint().domain(["1", "2", "3", "4", "5", "6"]).range([400, 0]);
+var ScaleY = d3.scaleLinear().domain([0,30]).range([400, 0]);
 svg.append("g")
-    .attr('transform','translate(85,400)')
+    .attr('transform','translate(0,400)')
     .call(d3.axisBottom(ScaleX))
     .selectAll("text")
         .attr("y", 0)
@@ -21,7 +20,6 @@ svg.append("g")
         .style("text-anchor", "start");
 
 svg.append("g")
-    .attr('transform','translate(85,0)')
     .call(d3.axisLeft(ScaleY));
 
 
@@ -32,7 +30,7 @@ svg.append('text')
 
 svg.append('text')
     .text('Highest Dance Education Level')
-    .attr('transform','translate(400, 600)');
+    .attr('transform','translate(250, 600)');
 
 svg.append('text')
     .text('Highest Non-Dance Education Level')
@@ -59,7 +57,7 @@ d3.csv('./data.csv', function(dataIn) {
         .data(current)
         .enter()
         .append('circle')
-        .attr('class','idk')
+        .attr('class','c_data')
         .attr('r', 5)
         .attr('fill', "purple");
 
@@ -67,38 +65,38 @@ d3.csv('./data.csv', function(dataIn) {
         .data(former)
         .enter()
         .append('circle')
-        .attr('class','idk2')
+        .attr('class','f_data')
         .attr('r', 5)
         .attr('fill', "grey");
 
 
-    //drawPoints(female);
+    drawPoints(current);
 
 });
 
 
 
-/*
+
 //this function draws the actual data points as circles. It's split from the enter() command because we want to run it many times
 //without adding more circles each time.
 function drawPoints(pointData){
 
-    svg.selectAll('.f_f')
+    svg.selectAll('.c_data')
         .data(pointData)
         .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A7GENED);
+            return ScaleY(d.A8ABEGTR);
         });
 
-    svg.selectAll('.f_c')
+    svg.selectAll('.f_data')
         .data(pointData)
         .attr('cx',function(d){
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A7GENED);
+            return ScaleY(d.A8CBGPCR);
         });
 }
 
