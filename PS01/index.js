@@ -2,10 +2,9 @@ var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
 
 var allData;
-var former;
-var current;
-var status= former;
-var clicked = true;
+var male;
+var female;
+gender= female;
 
 //axes
 var ScaleX = d3.scaleLinear().domain([0,30]).range([0, 450]);
@@ -22,61 +21,57 @@ d3.csv('./data.csv', function(dataIn) {
 
     allData = dataIn;
 
-    current = dataIn.filter(function (d) {
-        return d.A1CURFOR == 1;
+    //save the objects from the .csv with female
+    female = dataIn.filter(function(d){
+        return d.A2GENDER == 1;
     });
 
-    former = dataIn.filter(function (d) {
-        return d.A1CURFOR == 2;
+    //save the objects from the .csv with male
+    male = dataIn.filter(function(d){
+        return d.A2GENDER == 2;
     });
-
-    //console.log(current);
-    //console.log(former);
-
-});
-
-    /*nestedData = d3.nest()
-        .key(function(d){return d.year})
-        .entries(dataIn);
-
-    console.log(nestedData.filter(function(d){return d.key == "2016"})[0].values);
+    console.log(female);
+    console.log(male);
 
 
 
     svg.append('text')
-        .text('FORMER AND CURRENT DANCER AGES')
+        .text('TITLE HERE')
         .attr('transform','translate(300, -20)')
         .style('text-anchor','middle');
 
     svg.append('text')
-        .text('age started training')
+        .text('NOT SURE YET')
         .attr('transform','translate(260, 440)');
 
     svg.append('text')
-        .text('age began professional career')
+        .text('NOT SURE YET')
         .attr('transform', 'translate(-50,250)rotate(270)');
 
     //bind the data to the d3 selection, but don't draw it yet
     svg.selectAll('circles')
-        .data(data2016)
+        .data(current)
         .enter()
         .append('circle')
-        .attr('class','w_dataPoints')
+        .attr('class','c_dataPoints')
         .attr('r', 5)
-        .attr('fill', "lime");
+        .attr('fill', "purple");
 
     svg.selectAll('circles')
-        .data(data2016)
+        .data(former)
         .enter()
         .append('circle')
-        .attr('class','m_dataPoints')
+        .attr('class','f_dataPoints')
         .attr('r', 5)
-        .attr('fill', "blue");
+        .attr('fill', "grey");
 
     //call the drawPoints function below, and hand it the data2016 variable with the 2016 object array in it
-    drawPoints(data2016);
+    //drawPoints(data2016);
 
 });
+
+
+/*
 
 //this function draws the actual data points as circles. It's split from the enter() command because we want to run it many times
 //without adding more circles each time.
