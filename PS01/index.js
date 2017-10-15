@@ -2,9 +2,9 @@ var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 
 
 var allData;
-var male;
-var female;
-gender= female;
+var current;
+var former;
+gender= current;
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
@@ -26,8 +26,8 @@ svg.append("g")
 
 
 svg.append('text')
-    .text('TITLE HERE')
-    .attr('transform','translate(300, -20)')
+    .text('DANCER EDUCATION LEVELS')
+    .attr('transform','translate(500, -20)')
     .style('text-anchor','middle');
 
 svg.append('text')
@@ -43,67 +43,42 @@ d3.csv('./data.csv', function(dataIn) {
 
     allData = dataIn;
 
-    //save the objects from the .csv with female
-    female = dataIn.filter(function(d){
-        return d.A2GENDER == 1;
-    });
-
-    //save the objects from the .csv with male
-    male = dataIn.filter(function(d){
-        return d.A2GENDER == 2;
-    });
-   // console.log(female);
-    //console.log(male);
-
-
-    f_current = female.filter(function(d){
+    current = dataIn.filter(function(d){
         return d.A1CURFOR == 1;
     });
-    f_former = female.filter(function(d){
-        return d.A1CURFOR == 2;
-    });
-    m_current = male.filter(function(d){
-        return d.A1CURFOR == 1;
-    });
-    m_former = male.filter(function(d){
+    former = dataIn.filter(function(d){
         return d.A1CURFOR == 2;
     });
 
-
-
-    //console.log(m_current);
-    //console.log(m_former);
-    //console.log(f_current);
-    //console.log(f_former);
+    console.log(current);
+    console.log(former);
 
 
     //bind the data to the d3 selection, but don't draw it yet
     svg.selectAll('circles')
-        .data(f_current)
+        .data(current)
         .enter()
         .append('circle')
-        .attr('class','f_c')
+        .attr('class','idk')
         .attr('r', 5)
         .attr('fill', "purple");
 
     svg.selectAll('circles')
-        .data(f_former)
+        .data(former)
         .enter()
         .append('circle')
-        .attr('class','f_f')
+        .attr('class','idk2')
         .attr('r', 5)
         .attr('fill', "grey");
 
 
-    drawPoints(f_current);
-    //drawPoints(f_former);
-
+    //drawPoints(female);
 
 });
 
 
 
-
+/*
 //this function draws the actual data points as circles. It's split from the enter() command because we want to run it many times
 //without adding more circles each time.
 function drawPoints(pointData){
@@ -114,7 +89,7 @@ function drawPoints(pointData){
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A6QUALS1);
+            return ScaleY(d.A7GENED);
         });
 
     svg.selectAll('.f_c')
@@ -123,7 +98,7 @@ function drawPoints(pointData){
             return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return ScaleY(d.A6QUALS1);
+            return ScaleY(d.A7GENED);
         });
 }
 
