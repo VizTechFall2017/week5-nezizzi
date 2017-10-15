@@ -8,9 +8,9 @@ gender= female;
 
 //axes
 var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
-var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([500, 0]);
+var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([400, 0]);
 svg.append("g")
-    .attr('transform','translate(85,500)')
+    .attr('transform','translate(85,400)')
     .call(d3.axisBottom(ScaleX));
 svg.append("g")
     .attr('transform','translate(85,0)')
@@ -23,12 +23,12 @@ svg.append('text')
     .style('text-anchor','middle');
 
 svg.append('text')
-    .text('NOT SURE YET1')
-    .attr('transform','translate(260, 440)');
+    .text('Highest Non-Dance Education Level')
+    .attr('transform','translate(300, 550)');
 
 svg.append('text')
-    .text('NOT SURE YET')
-    .attr('transform', 'translate(-50,250)rotate(270)');
+    .text('Highest Dance Education Level')
+    .attr('transform', 'translate(-75,250)rotate(270)');
 
 //import the data from the .csv file
 d3.csv('./data.csv', function(dataIn) {
