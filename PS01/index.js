@@ -7,8 +7,10 @@ var female;
 gender= female;
 
 //axes
-var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
-var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([400, 0]);
+//var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
+//var ScaleY =d3.scalePoint().domain(["None", "Completed Primary School", "Completed Secondary School", "Post Secondary Diploma", "Bachelor's Degree", "Graduate Degree"]).range([400, 0]);
+var ScaleX = d3.scalePoint().domain(["1", "2", "3", "4", "5", "6","7"]).range([0, 800]);
+var ScaleY =d3.scalePoint().domain(["1", "2", "3", "4", "5", "6"]).range([400, 0]);
 svg.append("g")
     .attr('transform','translate(85,400)')
     .call(d3.axisBottom(ScaleX))
@@ -67,9 +69,8 @@ d3.csv('./data.csv', function(dataIn) {
         return d.A1CURFOR == 2;
     });
 
-});
 
-/*
+
     //console.log(m_current);
     //console.log(m_former);
     //console.log(f_current);
@@ -78,29 +79,28 @@ d3.csv('./data.csv', function(dataIn) {
 
     //bind the data to the d3 selection, but don't draw it yet
     svg.selectAll('circles')
-        .data(current)
+        .data(f_current)
         .enter()
         .append('circle')
-        .attr('class','c_dataPoints')
+        .attr('class','f_c')
         .attr('r', 5)
         .attr('fill', "purple");
 
     svg.selectAll('circles')
-        .data(former)
+        .data(f_former)
         .enter()
         .append('circle')
-        .attr('class','f_dataPoints')
+        .attr('class','f_f')
         .attr('r', 5)
         .attr('fill', "grey");
 
-    //call the drawPoints function below, and hand it the data2016 variable with the 2016 object array in it
+
     drawPoints(f_current);
-    drawPoints(f_former);
+    //drawPoints(f_former);
 
 
 });
 
-/*
 
 
 
@@ -108,22 +108,22 @@ d3.csv('./data.csv', function(dataIn) {
 //without adding more circles each time.
 function drawPoints(pointData){
 
-    svg.selectAll('.c_dataPoints')  //select all of the circles with dataPoints class that we made using the enter() commmand above
-        .data(pointData)          //re-attach them to data (necessary for when the data changes from 2016 to 2017)
+    svg.selectAll('.f_f')
+        .data(pointData)
         .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
-            return scaleX(d.);
+            return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return scaleY(d.women);
+            return ScaleY(d.A6QUALS1);
         });
 
-    svg.selectAll('.f_dataPoints')  //do the same for the men's data series
+    svg.selectAll('.f_c')
         .data(pointData)
         .attr('cx',function(d){
-            return scaleX(d.age);
+            return ScaleX(d.A6QUALS1);
         })
         .attr('cy',function(d){
-            return scaleY(d.men);
+            return ScaleY(d.A6QUALS1);
         });
 }
 
