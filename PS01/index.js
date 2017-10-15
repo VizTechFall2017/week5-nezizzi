@@ -4,7 +4,7 @@ var svg = d3.select('svg').append('g').attr('transform','translate(100,100)');
 var allData;
 var current;
 var former;
-gender= current;
+clicked=true;
 
 //axes
 //var ScaleX = d3.scalePoint().domain(["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]).range([0, 800]);
@@ -13,14 +13,15 @@ var ScaleY = d3.scaleLinear().domain([0,30]).range([400, 0]);
 svg.append("g")
     .attr('transform','translate(0,400)')
     .call(d3.axisBottom(ScaleX))
-    .selectAll("text")
-        .attr("y", 0)
-        .attr("x", 9)
-        .attr("transform", "rotate(90)")
-        .style("text-anchor", "start");
-
 svg.append("g")
     .call(d3.axisLeft(ScaleY));
+
+axislabel = ["None", "Diploma from Dance School", "Diploma from Performing Arts School", "Bachelor's Degree", " Advanced Diploma from Dance School", "Advanced Diploma from Performing Arts School","Graduate Degree"]
+
+/*svg.append('text')
+    .text(axislabel)
+    .attr('transform','translate(0,450)')
+    .attr("text-anchor", "axisBottom");*/
 
 
 svg.append('text')
@@ -33,8 +34,8 @@ svg.append('text')
     .attr('transform','translate(250, 600)');
 
 svg.append('text')
-    .text('Highest Non-Dance Education Level')
-    .attr('transform', 'translate(-75,300)rotate(270)');
+    .text('Age')
+    .attr('transform', 'translate(-50,200)rotate(270)');
 
 //import the data from the .csv file
 d3.csv('./data.csv', function(dataIn) {
@@ -57,15 +58,15 @@ d3.csv('./data.csv', function(dataIn) {
         .data(current)
         .enter()
         .append('circle')
-        .attr('class','c_data')
+        .attr('class','a_beg')
         .attr('r', 5)
         .attr('fill', "purple");
 
     svg.selectAll('circles')
-        .data(former)
+        .data(current)
         .enter()
         .append('circle')
-        .attr('class','f_data')
+        .attr('class','a_prof')
         .attr('r', 5)
         .attr('fill', "grey");
 
@@ -81,7 +82,7 @@ d3.csv('./data.csv', function(dataIn) {
 //without adding more circles each time.
 function drawPoints(pointData){
 
-    svg.selectAll('.c_data')
+    svg.selectAll('.a_beg')
         .data(pointData)
         .attr('cx',function(d){   //look up values for all the attributes that might have changed, and draw the new circles
             return ScaleX(d.A6QUALS1);
@@ -90,7 +91,7 @@ function drawPoints(pointData){
             return ScaleY(d.A8ABEGTR);
         });
 
-    svg.selectAll('.f_data')
+    svg.selectAll('.a_prof')
         .data(pointData)
         .attr('cx',function(d){
             return ScaleX(d.A6QUALS1);
@@ -101,20 +102,18 @@ function drawPoints(pointData){
 }
 
 
-/*
+
 //this function runs when the HTML button is clicked.
 function buttonClicked(){
 
-    //check to see whether the tracker variable is true. If it is, use the 2017 data set
     if(clicked == true){
-        drawPoints(data2000);  //call the draw function again, to redraw the circles
-        clicked = false;       //reset the value of the tracker variable
+        drawPoints(former);
+        clicked = false;
     }
-    else{   //if the tracker variable is not true, use the 2016 data set
-        drawPoints(data2016);
+    else{
+        drawPoints(current);
         clicked = true;
     }
 
 
-
-}*/
+}
